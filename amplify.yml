@@ -9,7 +9,7 @@ frontend:
   phases:
     preBuild:
        commands:
-         - node -e 'console.log(v8.getHeapStatistics().total_available_size/(1024*1024))' 
+         - node -e 'console.log(v8.getHeapStatistics().total_available_size/(1024*1024))' #comment hertr
     build:
       commands:
         - npm run build
