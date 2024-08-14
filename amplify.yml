@@ -1,23 +1,21 @@
 version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - npm ci --cache .npm --prefer-offline
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
     preBuild:
-       commands:
-         - node -e 'console.log(v8.getHeapStatistics().total_available_size/(1024*1024))' #comment hertr
+      commands:
+        - sudo yum install -y jq
+        - npm ci --cache .npm --prefer-offline
     build:
       commands:
+        - echo "SECRET=\"$(echo $secrets | jq -r .SECRET)\"" >> .env
+        - echo $secrets
+        - cat .env
         - npm run build
+        - printenv
   artifacts:
-    baseDirectory: dist
+    baseDirectory: build
     files:
       - '**/*'
   cache:
     paths:
       - .npm/**/*
-      - node_modules/**/*
