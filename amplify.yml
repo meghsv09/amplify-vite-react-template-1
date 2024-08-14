@@ -9,6 +9,7 @@ frontend:
       commands:
         - echo "fetching parameter value"
         - echo $(aws ssm get-parameter --name "/amplify/shared/d1i2oiluh7p2pq/SECRET" --with-decryption --query "Parameter.Value" --output text)
+        - aws --version
         - npm run build
         - printenv
   artifacts:
